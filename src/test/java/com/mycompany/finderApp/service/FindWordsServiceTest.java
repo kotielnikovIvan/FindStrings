@@ -1,8 +1,9 @@
 package com.mycompany.finderApp.service;
 
+import com.mycompany.finderApp.entity.Sentence;
 import com.mycompany.finderApp.requestHandler.RequestHandler;
-import com.mycompany.finderApp.service.FindWordsService;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,11 +11,19 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FindWordsServiceTest {
+    FileService fileService = new FileService();
+    RequestHandler handler = new RequestHandler();
+
+    String stringBeforeTests;
+
+    @BeforeEach
+    public void readBeforeTests() {
+        stringBeforeTests = fileService.readFile();
+    }
 
     @Test
     public void testFindWords() {
-        FileService fileService = new FileService();
-        RequestHandler handler = new RequestHandler();
+
         Map<String, Integer> testWords = new HashMap<>();
 
         testWords.put("hello", 2);
@@ -22,7 +31,7 @@ public class FindWordsServiceTest {
         testWords.put("my", 2);
         testWords.put("you", 3);
 
-        fileService.writeToFile("Hello, hello, i, I, my, you ? my. you you");
+        fileService.writeToFile("hello , Hello , i , I , my , you ? my . you you");
         handler.countWordsAmount();
         Map<String, Integer> realWords = handler.getWords();
 
@@ -33,15 +42,25 @@ public class FindWordsServiceTest {
     }
 
     @Test
-    public void testNull() {
-        FileService fileService = new FileService();
-        RequestHandler handler = new RequestHandler();
-
-        fileService.writeToFile(null);
-        handler.countWordsAmount();
-        Map<String, Integer> realWords = handler.getWords();
-        assertNull(realWords);
+    public void testReadWriteFile() {
+        String sentenceBeforeRead = "Hello, dear!";
+        fileService.writeToFile(sentenceBeforeRead);
+        String sentenceAfterRead = fileService.readFile();
+        assertTrue(sentenceBeforeRead.equals(sentenceAfterRead));
     }
 
+    @Test
+    public void testEmptySentence() {
+        fileService.writeToFile("");
 
+        handler.countWordsAmount();
+
+        assertTrue(handler.getSentence().getStringSentence().equals(""));
+
+    }
+
+    @AfterEach
+    public void writeToFileAfterTests() {
+        fileService.writeToFile(stringBeforeTests);
+    }
 }

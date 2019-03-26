@@ -6,8 +6,11 @@ import com.mycompany.finderApp.service.FindWordsService;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class RequestHandler {
+    private final static Logger log = Logger.getLogger(RequestHandler.class.getSimpleName());
+
     Sentence sentence = new Sentence();
 
     private Map<String, Integer> words = new HashMap<>();
@@ -32,9 +35,11 @@ public class RequestHandler {
     public void countWordsAmount() {
         FindWordsService findWordsService = new FindWordsService();
         FileService fileService = new FileService();
-        sentence.setSentence(fileService.readFile());
-        if (sentence.getSentence() != null) {
-            findWordsService.findWordsAmount(sentence.getSentence(), words);
+        sentence.setStringSentence(fileService.readFile());
+        if (sentence.getStringSentence() != null && sentence.getStringSentence() != "") {
+            findWordsService.findWordsAmount(sentence.getStringSentence(), words);
+        } else {
+            log.info("Your string is null or empty");
         }
     }
 

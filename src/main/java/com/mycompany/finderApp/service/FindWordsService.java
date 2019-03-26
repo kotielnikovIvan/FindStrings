@@ -8,13 +8,15 @@ public class FindWordsService {
         String[] subSentences = sentence.toLowerCase().split(" ");
         for (int i = 0; i < subSentences.length; i++) {
             int amount = 0;
-            if (!words.containsKey(subSentences[i])) {
-                for (int j = i; j < subSentences.length; j++) {
-                    if (subSentences[i].equalsIgnoreCase(subSentences[j])) {
-                        amount++;
+            if(!(subSentences[i] == "." || subSentences[i] == "," || subSentences[i] == "!" || subSentences[i] == "?")) {
+                if (!words.containsKey(subSentences[i])) {
+                    for (int j = i; j < subSentences.length; j++) {
+                        if (subSentences[i].equalsIgnoreCase(subSentences[j])) {
+                            amount++;
+                        }
                     }
+                    words.put(subSentences[i], amount);
                 }
-                words.put(subSentences[i], amount);
             }
         }
     }

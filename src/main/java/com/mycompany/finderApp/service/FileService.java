@@ -22,12 +22,10 @@ public class FileService {
     public String readFile() {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(PATH))) {
-            StringBuffer tempSentence = new StringBuffer("");
+            StringBuffer tempSentence = new StringBuffer();
             int i;
             while ((i = reader.read()) != -1) {
-                if(!((char)i == '.' || (char)i == ',' || (char)i == '!' || (char)i == '?')) {
-                    tempSentence.append((char) i);
-                }
+                tempSentence.append((char) i);
             }
             String sentence = new String(tempSentence);
             return sentence;

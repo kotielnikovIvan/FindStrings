@@ -2,14 +2,14 @@ package com.mycompany.finderApp.entity;
 
 public class Sentence {
 
-    private String sentence;
+    private String stringSentence;
 
-    public String getSentence() {
-        return sentence;
+    public String getStringSentence() {
+        return stringSentence;
     }
 
-    public void setSentence(String sentence) {
-        this.sentence = sentence;
+    public void setStringSentence(String stringSentence) {
+        this.stringSentence = stringSentence;
     }
 
 }
