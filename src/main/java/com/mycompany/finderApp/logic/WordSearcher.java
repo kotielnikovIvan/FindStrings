@@ -1,11 +1,11 @@
-package com.mycompany.finderApp.engine;
+package com.mycompany.finderApp.logic;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class Search {
-    private final static Logger log = Logger.getLogger(Search.class.getSimpleName());
+public class WordSearcher {
+    private final static Logger log = Logger.getLogger(WordSearcher.class.getSimpleName());
 
     public Map<String, Integer> findWordsAmount(String sentence) {
         Map<String, Integer> words = new HashMap<>();
@@ -18,9 +18,9 @@ public class Search {
             String[] subSentences = sentence.toLowerCase().split(" ");
             for (int i = 0; i < subSentences.length; i++) {
                 if (!(subSentences[i].matches("[0-9]+"))) {
-                    int amount = 0;
                     if (!(subSentences[i].equals(".")) && !(subSentences[i].equals(",")) && !(subSentences[i].equals("!")) && !(subSentences[i].equals("?"))) {
                         if (!words.containsKey(subSentences[i])) {
+                            int amount = 0;
                             for (int j = i; j < subSentences.length; j++) {
                                 if (subSentences[i].equalsIgnoreCase(subSentences[j])) {
                                     amount++;

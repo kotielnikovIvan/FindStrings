@@ -1,4 +1,4 @@
-package com.mycompany.finderApp.utility;
+package com.mycompany.finderApp.logic;
 
 
 import java.io.*;
