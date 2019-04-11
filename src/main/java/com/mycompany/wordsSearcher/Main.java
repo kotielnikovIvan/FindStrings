@@ -1,4 +1,4 @@
-package com.mycompany.finderApp;
+package com.mycompany.wordsSearcher;
 
 import java.io.File;
 

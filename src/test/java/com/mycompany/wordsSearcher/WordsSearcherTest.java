@@ -1,4 +1,4 @@
-package com.mycompany.finderApp;
+package com.mycompany.wordsSearcher;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +15,7 @@ public class WordsSearcherTest {
     private Map<String, Integer> testWords;
 
     private String notEmptyText = "All people are different, but we all have something in common";
-    private String regularText = "hello, I, my, you! You ,my? Hello .you";
+    private String textWithGivenWords  = "hello, I, my, you! You ,my? Hello .you";
     private String emptyText = "";
     private String nullText;
     private String textWithOnlyNumbers = "2 5 623 32 46 5";
@@ -28,14 +28,14 @@ public class WordsSearcherTest {
     }
 
     @Test
-    public void when_realSentence_EqualsTo_TestSentence_then_ResultEquals() {
+    public void testWordsCompareToCalculatedByMethodWords_AmountShouldBeEquals() {
         testWords.put("hello", 2);
         testWords.put("i", 1);
         testWords.put("my", 2);
         testWords.put("you", 3);
 
         Map<String, Integer> realWords;
-        realWords = wordsSearcher.findWordsAmount(regularText);
+        realWords = wordsSearcher.findWordsAmount(textWithGivenWords);
 
         assertEquals(testWords.get("hello"), realWords.get("hello"));
         assertEquals(testWords.get("I"), realWords.get("I"));
@@ -44,7 +44,7 @@ public class WordsSearcherTest {
     }
 
     @Test
-    public void when_sentenceIsNull_then_catchException() throws RuntimeException {
+    public void calculateWordsInNullText_ShouldCatchException() throws RuntimeException {
         try {
             testWords = wordsSearcher.findWordsAmount(nullText);
             for (String key : testWords.keySet()) {
@@ -57,26 +57,26 @@ public class WordsSearcherTest {
     }
 
     @Test
-    public void when_sentenceIsNotNull_then_resultIsNotNull() {
+    public void calculateWordsInNotNullText_ResultShouldBeNotNull() {
         testWords = wordsSearcher.findWordsAmount(notEmptyText);
         for (String key : testWords.keySet())
             assertNotNull(key);
     }
 
     @Test
-    public void when_sentenceIsEmpty_then_resultIsEmpty() {
+    public void calculateWordsInEmptyText_ResultShouldBeEmpty() {
         testWords = wordsSearcher.findWordsAmount(emptyText);
         assertTrue(testWords.isEmpty());
     }
 
     @Test
-    public void when_sentenceIsNotEmpty_then_resultIsNotEmpty() {
+    public void calculateWordsInNotEmptyText_ResultShouldBeNotEmpty() {
         testWords = wordsSearcher.findWordsAmount(notEmptyText);
         assertFalse(testWords.isEmpty());
     }
 
     @Test
-    public void when_sentenceHasOnlyNumbers_then_resultIsNull() {
+    public void calculateWordsWithOnlyNumbers_resultShouldBeNull() {
         testWords = wordsSearcher.findWordsAmount(textWithOnlyNumbers);
         for (String key : testWords.keySet()) {
             assertNull(key);
@@ -84,7 +84,7 @@ public class WordsSearcherTest {
     }
 
     @Test
-    public void when_subSentenceHasOnlySymbols_then_resultIsNull() {
+    public void calculateWordsWithOnlyMarks_resultShouldBeNull() {
         testWords = wordsSearcher.findWordsAmount(textWithOnlyMarks);
         for (String key : testWords.keySet()) {
             assertNull(key);
