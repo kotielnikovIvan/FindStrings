@@ -7,26 +7,28 @@ import java.util.logging.Logger;
 public class WordsSearcher {
     private final static Logger log = Logger.getLogger(WordsSearcher.class.getSimpleName());
 
-    public Map<String, Integer> findWordsAmount(String text) throws RuntimeException {
-        Map<String, Integer> words = new HashMap<>();
+    public Map<String, Integer> findWordsAmount(String text) {
         if (text == null) {
             log.warning("You don't have a sentence!");
             throw new RuntimeException("Input sentence null");
-        } else if (text.isEmpty()) {
-            log.warning("Your sentence is empty!");
         } else {
-            words = calculateWordsAmount(text);
+            return calculateWordsAmount(text);
         }
-        return words;
     }
 
     private Map<String, Integer> calculateWordsAmount(String text) {
         String[] subStrings = text.toLowerCase().split(" ");
-        // deleting all the numbers and marks in words
+        clearSentenceFromMarksAndNumbers(subStrings);
+        return countWords(subStrings);
+    }
+
+    private void clearSentenceFromMarksAndNumbers(String[] subStrings) {
         for (int i = 0; i < subStrings.length; i++) {
-            subStrings[i] = deleteMarksAndNumbers(subStrings[i]);
+            subStrings[i] = deleteMarksAndNumbersFromWord(subStrings[i]);
         }
-        // counting amount of words
+    }
+
+    private Map<String, Integer> countWords(String[] subStrings) {
         Map<String, Integer> words = new HashMap<>();
         for (int i = 0; i < subStrings.length; i++) {
             if (!words.containsKey(subStrings[i])) {
@@ -44,7 +46,7 @@ public class WordsSearcher {
         return words;
     }
 
-    private String deleteMarksAndNumbers(String word) {
+    private String deleteMarksAndNumbersFromWord(String word) {
         char[] chars = word.toCharArray();
         StringBuffer tempWord = new StringBuffer();
         for (int i = 0; i < chars.length; i++) {

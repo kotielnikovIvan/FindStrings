@@ -11,24 +11,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class WordsSearcherTest {
 
-    private WordsSearcher wordsSearcher;
-    private Map<String, Integer> testWords;
+    private WordsSearcher wordsSearcher = new WordsSearcher();
+    private Map<String, Integer> testWords = new HashMap<>();
 
     private String notEmptyText = "All people are different, but we all have something in common";
-    private String textWithGivenWords  = "hello, I, my, you! You ,my? Hello .you";
+    private String textWithGivenWords = "hello, I, my, you! You ,my? Hello .you";
     private String emptyText = "";
     private String nullText;
     private String textWithOnlyNumbers = "2 5 623 32 46 5";
     private String textWithOnlyMarks = "&# # @! $$# ?>< .,";
 
-    @BeforeEach
-    public void createObjects() {
-        wordsSearcher = new WordsSearcher();
-        testWords = new HashMap<>();
-    }
-
     @Test
-    public void testWordsCompareToCalculatedByMethodWords_AmountShouldBeEquals() {
+    public void testWordsCompareToCalculatedByMethodWords_amountShouldBeEquals() {
         testWords.put("hello", 2);
         testWords.put("i", 1);
         testWords.put("my", 2);
@@ -44,7 +38,7 @@ public class WordsSearcherTest {
     }
 
     @Test
-    public void calculateWordsInNullText_ShouldCatchException() throws RuntimeException {
+    public void calculateWordsInNullText_shouldCatchException() {
         try {
             testWords = wordsSearcher.findWordsAmount(nullText);
             for (String key : testWords.keySet()) {
@@ -57,20 +51,20 @@ public class WordsSearcherTest {
     }
 
     @Test
-    public void calculateWordsInNotNullText_ResultShouldBeNotNull() {
+    public void calculateWordsInNotNullText_resultShouldBeNotNull() {
         testWords = wordsSearcher.findWordsAmount(notEmptyText);
         for (String key : testWords.keySet())
             assertNotNull(key);
     }
 
     @Test
-    public void calculateWordsInEmptyText_ResultShouldBeEmpty() {
+    public void calculateWordsInEmptyText_resultShouldBeEmpty() {
         testWords = wordsSearcher.findWordsAmount(emptyText);
         assertTrue(testWords.isEmpty());
     }
 
     @Test
-    public void calculateWordsInNotEmptyText_ResultShouldBeNotEmpty() {
+    public void calculateWordsInNotEmptyText_resultShouldBeNotEmpty() {
         testWords = wordsSearcher.findWordsAmount(notEmptyText);
         assertFalse(testWords.isEmpty());
     }
